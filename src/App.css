@@ -1,38 +1,42 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app-container {
   display: flex;
   flex-direction: column;
+  min-height: 400px;
+}
+
+/* Styling the input to look better inside the glass container */
+input[type="text"] {
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 8px rgba(107, 115, 255, 0.5);
+}
+
+/* Ensure the trash icon is centered in the button */
+.delete-btn {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
 }
 
-.App-link {
-  color: #61dafb;
+/* Modernizing the scrollbar for the todo list */
+ul::-webkit-scrollbar {
+  width: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ul::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+/* Simple hover effect for tasks */
+.todo-item:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
 }

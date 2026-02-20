@@ -23,6 +23,8 @@ body {
   border-radius: 16px;
   backdrop-filter: blur(20px);
   transition: 0.3s ease;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .app-container.dark {
@@ -35,10 +37,7 @@ body {
   color: black;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 10px;
-}
+h1 { text-align: center; margin-bottom: 10px; }
 
 .quote {
   text-align: center;
@@ -48,61 +47,81 @@ h1 {
 }
 
 .theme-toggle {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin: 10px auto 20px auto;
   padding: 8px 12px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  color: inherit;
 }
 
 .input-section {
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
 }
 
 input {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
   border: none;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.dark input {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  padding: 8px 12px;
+  padding: 10px 15px;
   transition: 0.2s ease;
+  font-weight: bold;
 }
 
-button:hover {
-  transform: translateY(-2px);
-}
+button:hover { transform: translateY(-2px); }
 
 .filter-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+  gap: 5px;
+}
+
+.filter-buttons button.active {
+  background: #6b73ff;
+  color: white;
+}
+
+.task-count {
+  text-align: center;
+  font-size: 0.9rem;
+  margin: 15px 0;
 }
 
 .todo-item {
-  margin-top: 15px;
-  padding: 10px;
+  margin-top: 10px;
+  padding: 12px;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(255, 255, 255, 0.1);
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.app-container.dark .todo-item {
-  background: rgba(255, 255, 255, 0.1);
-}
+.light .todo-item { background: rgba(0, 0, 0, 0.05); }
 
-.app-container.light .todo-item {
-  background: rgba(0, 0, 0, 0.05);
-}
+.todo-text { cursor: pointer; flex: 1; }
 
 .completed {
   text-decoration: line-through;
@@ -112,6 +131,9 @@ button:hover {
 .delete-btn {
   background: #ff4d4d;
   color: white;
+  padding: 8px;
+  display: flex;
+  align-items: center;
 }
 
 @keyframes fadeIn {

@@ -1,26 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { FaTrash } from "react-icons/fa";
+import React, { useState, useEffect, useMemo } from "react";
+import { FaTrash, FaSun, FaMoon } from "react-icons/fa";
+import "./App.css";
+import "./index.css";
 
 function App() {
-const [todos, setTodos] = useState(() => {
-  const storedTodos = localStorage.getItem("todos");
-  return storedTodos ? JSON.parse(storedTodos) : [];
-}); 
- const [input, setInput] = useState("");
+  // Initialize todos from localStorage
+  const [todos, setTodos] = useState(() => {
+    const storedTodos = localStorage.getItem("todos");
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  });
+
+  const [input, setInput] = useState("");
   const [filter, setFilter] = useState("all");
   const [darkMode, setDarkMode] = useState(true);
 
-  // Load todos from localStorage on first render
-  useEffect(() => {
-  localStorage.setItem("todos", JSON.stringify(todos));
-}, [todos]);
-
-  // Save todos to localStorage whenever todos change
+  // Save todos to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = () => {
+  // useMemo keeps the quote the same unless the page is refreshed
+  const randomQuote = useMemo(() => {
+    const quotes = [
+      "Consistency beats motivation.",
+      "Small progress is still progress.",
+      "Discipline creates freedom.",
+      "You don’t need to be extreme, just consistent.",
+      "Every expert was once a beginner."
+    ];
+    return quotes[Math.floor(Math.random() * quotes.length)];
+  }, []);
+
+  const addTodo = (e) => {
+    if (e) e.preventDefault(); // Prevents page reload on 'Enter'
     if (input.trim() === "") return;
 
     const newTodo = {
@@ -40,9 +52,7 @@ const [todos, setTodos] = useState(() => {
   const toggleComplete = (id) => {
     setTodos(
       todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, completed: !todo.completed }
-          : todo
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   };
@@ -53,62 +63,52 @@ const [todos, setTodos] = useState(() => {
     return true;
   });
 
-  const quotes = [
-  "Consistency beats motivation.",
-  "Small progress is still progress.",
-  "Discipline creates freedom.",
-  "You don’t need to be extreme, just consistent.",
-  "Every expert was once a beginner."
-];
-
-const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
   return (
-<div className={`app-container ${darkMode ? "dark" : "light"}`}>
+    <div className={`app-container ${darkMode ? "dark" : "light"}`}>
       <h1>Advanced Todo App</h1>
-    <p className="quote">{randomQuote}</p>
-    <button 
-  className="theme-toggle"
-  onClick={() => setDarkMode(!darkMode)}
->
-  {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-</button>
+      <p className="quote">"{randomQuote}"</p>
 
-    <div className="input-section">
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Enter a task"
-      />
-      <button onClick={addTodo}>Add</button>
-    </div>
+      <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? <FaSun /> : <FaMoon />} {darkMode ? " Light Mode" : " Dark Mode"}
+      </button>
 
-    <div className="filter-buttons">
-      <button onClick={() => setFilter("all")}>All</button>
-      <button onClick={() => setFilter("completed")}>Completed</button>
-      <button onClick={() => setFilter("pending")}>Pending</button>
+      <form className="input-section" onSubmit={addTodo}>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Enter a task..."
+        />
+        <button type="submit">Add</button>
+      </form>
+
+      <div className="filter-buttons">
+        <button className={filter === "all" ? "active" : ""} onClick={() => setFilter("all")}>All</button>
+        <button className={filter === "completed" ? "active" : ""} onClick={() => setFilter("completed")}>Completed</button>
+        <button className={filter === "pending" ? "active" : ""} onClick={() => setFilter("pending")}>Pending</button>
+      </div>
+
+      <p className="task-count">
+        {todos.filter((todo) => !todo.completed).length} tasks remaining
+      </p>
+
+      <ul style={{ listStyle: "none", padding: 0, width: "100%" }}>
+        {filteredTodos.map((todo) => (
+          <li key={todo.id} className="todo-item">
+            <span
+              onClick={() => toggleComplete(todo.id)}
+              className={`todo-text ${todo.completed ? "completed" : ""}`}
+            >
+              {todo.text}
+            </span>
+            <button onClick={() => deleteTodo(todo.id)} className="delete-btn">
+              <FaTrash />
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
-<p className="task-count">
-  {todos.filter(todo => !todo.completed).length} tasks remaining
-</p>
-    <ul style={{ listStyle: "none", padding: 0 }}>
-      {filteredTodos.map((todo) => (
-        <li key={todo.id} className="todo-item">
-          <span
-            onClick={() => toggleComplete(todo.id)}
-            className={`todo-text ${todo.completed ? "completed" : ""}`}
-          >
-            {todo.text}
-          </span>
-<button onClick={() => deleteTodo(todo.id)} className="delete-btn">
-  <FaTrash />
-</button>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-  
+  );
 }
 
 export default App;
