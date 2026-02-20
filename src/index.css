@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(-45deg, #667eea, #764ba2, #6b73ff, #000dff);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.app-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  transition: 0.3s ease;
+}
+
+.app-container.dark {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+.app-container.light {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.quote {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.theme-toggle {
+  display: block;
+  margin: 10px auto 20px auto;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.input-section {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.todo-item {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.app-container.dark .todo-item {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.app-container.light .todo-item {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.delete-btn {
+  background: #ff4d4d;
+  color: white;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
