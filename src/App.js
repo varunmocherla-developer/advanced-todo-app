@@ -102,7 +102,8 @@ const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
           </span>
 <button onClick={() => deleteTodo(todo.id)} className="delete-btn">
   <FaTrash />
-</button>        </li>
+</button>
+        </li>
       ))}
     </ul>
   </div>
